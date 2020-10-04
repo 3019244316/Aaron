@@ -36,6 +36,14 @@ static int cmd_q(char *args) {
 	return -1;
 }
 
+static int cmd_p(char *args) {
+	bool success;
+	int i;
+	i = expr(args, &success);
+	printf("%d\n", i);
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static int cmd_si(char *args);
@@ -55,7 +63,8 @@ static struct {
 	{ "si", "Single step execution", cmd_si },
 	{ "info", "Print register", cmd_info },
 	{ "x", "Scan memory", cmd_x },
-	
+	{ "p", "Evaluate an expression", cmd_p },	
+
 	/* TODO: Add more commands */
 
 };
