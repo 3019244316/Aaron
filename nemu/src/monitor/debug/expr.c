@@ -212,9 +212,11 @@ int eval(int p, int q)
 
                         int j = 0, sl = 1, sw = 1, sb = 1;
 
-                        for(; j<8 && sl!=0; j++)  
+                        for(; j<8; j++)  
                         {  
-                                sl = strcmp(tokens[p].str+1, regsl[j]);  
+				char str[4] = {};
+				strncpy(str, tokens[p].str+1, 3);
+                                sl = strcmp(str, regsl[j]);
 				if(sl==0){                           
                                 	return cpu.gpr[j]._32;
 				}  
@@ -225,9 +227,7 @@ int eval(int p, int q)
 			{
 				char str[3] = {};
 				strncpy(str, tokens[p].str+1, 2);
-
-				sw = strcmp(str, regsw[j]);
-				printf("%s %d\n", str, sw);				
+				sw = strcmp(str, regsw[j]);				
  				if(sw==0){ 
 					return cpu.gpr[j]._16;				
 				}
