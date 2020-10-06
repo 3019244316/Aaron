@@ -207,60 +207,10 @@ int eval(int p, int q)
                         return i;  
                 } 
  
-                else if(tokens[p].type==262)  
-                
-		/*
-		{  
-                        int j = 0,sl = 1,sw = 1;  
-                        for( ; j<8 && sl!=0 && sw!=0; j++)  
-                        {  
-                                sl = strcmp(tokens[p].str+1, regsl[i]);  
-                                sw = strcmp(tokens[p].str+1, regsw[i]);  
-                        }  
-                        if(sl==0)  
-                        {       i = cpu.gpr[j]._32;  
-                                return i;  
-                        }  
-                        else if(sw==0)  
-                                return cpu.gpr[j]._16;  
-                        else  
-                        {  
-                                if(strcmp(tokens[p].str,"$al")==0)  
-                                        return reg_b(0);  
-                                if(strcmp(tokens[p].str+1,"cl")==0)  
-                                        return reg_b(1);  
-                                if(strcmp(tokens[p].str+1,"dl")==0)  
-                                        return reg_b(2);  
-                                if(strcmp(tokens[p].str+1,"bl")==0)  
-                                        return reg_b(3);  
-                                if(strcmp(tokens[p].str+1,"ah")==0)  
-                                        return reg_b(4);  
-                                if(strcmp(tokens[p].str+1,"ch")==0)  
-                                        return reg_b(5);  
-                                if(strcmp(tokens[p].str+1,"dh")==0)  
-                                        return reg_b(6);  
-                                if(strcmp(tokens[p].str+1,"bh")==0)  
-                                        return reg_b(7);  
-                        }  
-                        if(j==8)  
-                                assert(0);  
-                }  */
-
+                else if(tokens[p].type==262)
 		{ 
 
                         int j = 0, sl = 1, sw = 1, sb = 1;
-
-			/*
-			char *regsl2[] = {"$eax", "$ecx", "$edx", "$ebx", "$esp", "$ebp", "$esi","$edi"};  
-			char *regsw2[] = {"$ax"  , "$cx", "$dx", "$bx", "$sp", "$pi", "$si", "$di"};
-			char *regsw3[] = {"$axx"  , "$cxx", "$dxx", "$bxx", "$spx", "$pix", "$six", "$dix"};
-			char *regsw4[] = {"$axp"  , "$cxp", "$dxp", "$bxp", "$spp", "$pip", "$sip", "$dip"};
-			char *regsw5[] = {"$axi"  , "$cxi", "$dxi", "$bxi", "$spi", "$pii", "$sii", "$dii"};
-			char *regsb2[] = {"$al"  , "$cl", "$dl", "$bl", "$ah", "$ch", "$dh", "$bh"};
-			char *regsb3[] = {"$alx"  , "$clx", "$dlx", "$blx", "$ahx", "$chx", "$dhx", "$bhx"};
-			char *regsb4[] = {"$alp"  , "$clp", "$dlp", "$blp", "$ahp", "$chp", "$dhp", "$bhp"};
-			char *regsb5[] = {"$ali"  , "$cli", "$dli", "$bli", "$ahi", "$chi", "$dhi", "$bhi"};
-			*/
 
                         for(; j<8 && sl!=0; j++)  
                         {  
@@ -271,7 +221,6 @@ int eval(int p, int q)
                         }  
                         
 			j = 0;
-			
 			for( ; j<8; j++)
 			{
 				char str[3] = {};
@@ -305,26 +254,6 @@ int eval(int p, int q)
 					return cpu.gpr[j]._8[1];				
 				}
                         }
-
-			/*
-
-                      	if( strcmp(tokens[p].str+1, regsb[0])==0 )  
-                         	return cpu.gpr[0]._8[0];  
-                       	if( strcmp(tokens[p].str+1, regsb[1])==0 )  
-                              	return cpu.gpr[1]._8[0];  
-                       	if( strcmp(tokens[p].str+1, regsb[2])==0 )    
-                            	return cpu.gpr[2]._8[0];  
-                     	if( strcmp(tokens[p].str+1, regsb[3])==0 )  
-                              	return cpu.gpr[3]._8[0];  
-                      	if( strcmp(tokens[p].str+1, regsb[4])==0 )  
-                             	return cpu.gpr[0]._8[1];  
-			if( strcmp(tokens[p].str+1, regsb[5])==0 )  	 
-                             	return cpu.gpr[1]._8[1];  
-                       	if( strcmp(tokens[p].str+1, regsb[6])==0 )    
-                            	return cpu.gpr[2]._8[1];  
-                     	if( strcmp(tokens[p].str+1, regsb[7])==0 )     
-                              	return cpu.gpr[3]._8[1];
-			*/
 			
                 }  
 
