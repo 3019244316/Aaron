@@ -271,7 +271,7 @@ int eval(int p, int q)
                         }  
                         
 			j = 0;
-			char str[2];
+			char str[3];
 			for( ; j<8; j++)
 			{
 				strncpy(str, tokens[p].str+1, 2);
