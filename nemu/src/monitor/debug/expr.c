@@ -49,6 +49,7 @@ int eval(int p, int q);
 
 int find_dominant_operator(int p, int q);
 
+
 static regex_t re[NR_REGEX];
 
 /* Rules are used for many times.
@@ -247,7 +248,7 @@ int eval(int p, int q)
 
 		{ 
 
-                        int j = 0, sl = 1, sw = 1;
+                        int j = 0, sl = 1, sw = 1, sb = 1;
 
 			/*
 			char *regsl2[] = {"$eax", "$ecx", "$edx", "$ebx", "$esp", "$ebp", "$esi","$edi"};  
@@ -269,14 +270,38 @@ int eval(int p, int q)
 				}  
                         }  
                         
-			int k=0;
-			for( ; k<8; k++)
+			j = 0;
+			char str[4];
+			for( ; j<8; j++)
 			{
-				sw = strcmp(tokens[p].str+1, regsw[k]);				
+				strncpy(str, tokens[p].str+1, 2);
+				sw = strcmp(str, regsw[j]);				
  				if(sw==0){ 
-					return cpu.gpr[k]._16;				
+					return cpu.gpr[j]._16;				
 				}
                         }
+
+			j = 0;
+			for( ; j<4; j++)
+			{
+				strncpy(str, tokens[p].str+1, 2);
+				sb = strcmp(str, regsb[j]);				
+ 				if(sb==0){ 
+					return cpu.gpr[j]._8[0];				
+				}
+                        }
+
+			j = 0;
+			for( ; j<4; j++)
+			{
+				strncpy(str, tokens[p].str+1, 2);
+				sb = strcmp(str, regsb[j]);				
+ 				if(sb==0){ 
+					return cpu.gpr[j]._8[1];				
+				}
+                        }
+
+			/*
 
                       	if( strcmp(tokens[p].str+1, regsb[0])==0 )  
                          	return cpu.gpr[0]._8[0];  
@@ -294,6 +319,7 @@ int eval(int p, int q)
                             	return cpu.gpr[2]._8[1];  
                      	if( strcmp(tokens[p].str+1, regsb[7])==0 )     
                               	return cpu.gpr[3]._8[1];
+			*/
 			
                 }  
 
@@ -353,7 +379,9 @@ int eval(int p, int q)
         }
   
         return 0;  
-}   
+}  
+
+
 
 
 bool check_parentheses(int p, int q)  
