@@ -271,9 +271,10 @@ int eval(int p, int q)
                         }  
                         
 			j = 0;
-			char str[3];
+			
 			for( ; j<8; j++)
 			{
+				char str[3];
 				strncpy(str, tokens[p].str+1, 2);
 
 				sw = strcmp(str, regsw[j]);
@@ -286,6 +287,7 @@ int eval(int p, int q)
 			j = 0;
 			for( ; j<4; j++)
 			{
+				char str[3];
 				strncpy(str, tokens[p].str+1, 2);
 				sb = strcmp(str, regsb[j]);				
  				if(sb==0){ 
@@ -296,6 +298,7 @@ int eval(int p, int q)
 			j = 0;
 			for( ; j<4; j++)
 			{
+				char str[3];
 				strncpy(str, tokens[p].str+1, 2);
 				sb = strcmp(str, regsb[j]);				
  				if(sb==0){ 
