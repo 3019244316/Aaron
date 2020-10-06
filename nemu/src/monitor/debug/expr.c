@@ -271,11 +271,13 @@ int eval(int p, int q)
                         }  
                         
 			j = 0;
-			char str[4];
+			char str[2];
 			for( ; j<8; j++)
 			{
 				strncpy(str, tokens[p].str+1, 2);
-				sw = strcmp(str, regsw[j]);				
+
+				sw = strcmp(str, regsw[j]);
+				printf("%s %d\n", str, sw);				
  				if(sw==0){ 
 					return cpu.gpr[j]._16;				
 				}
