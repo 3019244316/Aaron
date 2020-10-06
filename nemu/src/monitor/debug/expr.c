@@ -144,7 +144,11 @@ static bool make_token(char *e) {
 		                    case 263:  
 		                        tokens[nr_token].type = 263;  
 		                        strncpy(tokens[nr_token].str, &e[position-substr_len], substr_len);  
-		                        break;  
+		                        break;
+				    case 264:
+					tokens[nr_token].type = 264;  
+		                        strncpy(tokens[nr_token].str, &e[position-substr_len], substr_len);  
+		                        break;
 		                    case 265:  
 		                        tokens[nr_token].type = 265;  
 		                        strncpy(tokens[nr_token].str, &e[position-substr_len], substr_len);  
@@ -178,7 +182,7 @@ uint32_t expr(char *e, bool *success) {
 	/* TODO: Insert codes to evaluate the expression. */
 	
 	int p = 0; 
-	int q = nr_token - 1;
+	int q = nr_token;
 	return eval(p, q);
 }
 
@@ -186,7 +190,7 @@ uint32_t expr(char *e, bool *success) {
 int eval(int p, int q)
 {  
         int i = 0;  
-        if(p>q)  
+        if(p>q) 
                 assert(0);  
         else if(p==q)  
         {  
@@ -200,9 +204,12 @@ int eval(int p, int q)
                 {  
                         sscanf(tokens[p].str,"%x", &i);  
                         return i;  
-                }  
+                } 
+ 
                 else if(tokens[p].type==262)  
-                {  
+                
+		/*
+		{  
                         int j = 0,sl = 1,sw = 1;  
                         for( ; j<8 && sl!=0 && sw!=0; j++)  
                         {  
@@ -236,9 +243,62 @@ int eval(int p, int q)
                         }  
                         if(j==8)  
                                 assert(0);  
+                }  */
+
+		{ 
+
+                        int j = 0, sl = 1, sw = 1;
+
+			/*
+			char *regsl2[] = {"$eax", "$ecx", "$edx", "$ebx", "$esp", "$ebp", "$esi","$edi"};  
+			char *regsw2[] = {"$ax"  , "$cx", "$dx", "$bx", "$sp", "$pi", "$si", "$di"};
+			char *regsw3[] = {"$axx"  , "$cxx", "$dxx", "$bxx", "$spx", "$pix", "$six", "$dix"};
+			char *regsw4[] = {"$axp"  , "$cxp", "$dxp", "$bxp", "$spp", "$pip", "$sip", "$dip"};
+			char *regsw5[] = {"$axi"  , "$cxi", "$dxi", "$bxi", "$spi", "$pii", "$sii", "$dii"};
+			char *regsb2[] = {"$al"  , "$cl", "$dl", "$bl", "$ah", "$ch", "$dh", "$bh"};
+			char *regsb3[] = {"$alx"  , "$clx", "$dlx", "$blx", "$ahx", "$chx", "$dhx", "$bhx"};
+			char *regsb4[] = {"$alp"  , "$clp", "$dlp", "$blp", "$ahp", "$chp", "$dhp", "$bhp"};
+			char *regsb5[] = {"$ali"  , "$cli", "$dli", "$bli", "$ahi", "$chi", "$dhi", "$bhi"};
+			*/
+
+                        for(; j<8 && sl!=0; j++)  
+                        {  
+                                sl = strcmp(tokens[p].str+1, regsl[j]);  
+				if(sl==0){                           
+                                	return cpu.gpr[j]._32;
+				}  
+                        }  
+                        
+			int k=0;
+			for( ; k<8; k++)
+			{
+				sw = strcmp(tokens[p].str+1, regsw[k]);				
+ 				if(sw==0){ 
+					return cpu.gpr[k]._16;				
+				}
+                        }
+
+                      	if( strcmp(tokens[p].str+1, regsb[0])==0 )  
+                         	return cpu.gpr[0]._8[0];  
+                       	if( strcmp(tokens[p].str+1, regsb[1])==0 )  
+                              	return cpu.gpr[1]._8[0];  
+                       	if( strcmp(tokens[p].str+1, regsb[2])==0 )    
+                            	return cpu.gpr[2]._8[0];  
+                     	if( strcmp(tokens[p].str+1, regsb[3])==0 )  
+                              	return cpu.gpr[3]._8[0];  
+                      	if( strcmp(tokens[p].str+1, regsb[4])==0 )  
+                             	return cpu.gpr[0]._8[1];  
+			if( strcmp(tokens[p].str+1, regsb[5])==0 )  	 
+                             	return cpu.gpr[1]._8[1];  
+                       	if( strcmp(tokens[p].str+1, regsb[6])==0 )    
+                            	return cpu.gpr[2]._8[1];  
+                     	if( strcmp(tokens[p].str+1, regsb[7])==0 )     
+                              	return cpu.gpr[3]._8[1];
+			
                 }  
-                else  
-                        assert(0);  
+
+                else  assert(0);  
+
         }  
         else if(check_parentheses(p, q)==true)  
                 return eval(p+1, q-1);  
