@@ -52,6 +52,10 @@ static int cmd_info(char *args);
 
 static int cmd_x(char *args);
 
+static int cmd_w(char *args);
+
+static int cmd_d(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -63,7 +67,9 @@ static struct {
 	{ "si", "Single step execution", cmd_si },
 	{ "info", "Print register", cmd_info },
 	{ "x", "Scan memory", cmd_x },
-	{ "p", "Evaluate an expression", cmd_p },	
+	{ "p", "Evaluate an expression", cmd_p },
+	{ "w", "Set watchpoint", cmd_w },
+	{ "d", "Delete watchpoint", cmd_d },
 
 	/* TODO: Add more commands */
 
@@ -71,7 +77,24 @@ static struct {
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
-static int cmd_x(char *args){
+
+static int cmd_w(char *args)
+{
+	set_watchpoint(args);
+	return 0;
+}
+
+static int cmd_d(char *args)
+{
+	char *arg = strtok(NULL, " ");
+	int NO;
+	sscanf(arg, "%d", &NO);
+	delete_watchpoint(NO);
+	return 0;
+}
+
+static int cmd_x(char *args)
+{
 	char *arg1 = strtok(NULL, " ");
 	char *arg2 = strtok(NULL, " ");
 	int len;
@@ -91,9 +114,15 @@ static int cmd_x(char *args){
 	return 0;
 }
 
-static int cmd_info(char *args){
+static int cmd_info(char *args)
+{
 	char *arg = strtok(NULL, " ");
-	if ( strcmp(arg, "r")==0 )
+	if ( !arg )
+	{
+		printf("Instruction error\n");
+		printf("Try 'info r' or 'info w' to print more information\n");
+	}
+	else if ( strcmp(arg, "r")==0 )
 	{
 		int i;
 		for (i = 0; i < 8; i++)
@@ -101,11 +130,20 @@ static int cmd_info(char *args){
 		printf("%s 0x%x %d\n", regsl[i], cpu.gpr[i]._32, cpu.gpr[i]._32);
 		}
 	}
+	else if ( strcmp(arg, "w")==0 )
+	{
+		list_watchpoint();
+	}
+	else{
+		printf("Instruction error\n");
+		printf("Try 'info r' or 'info w' to print more information\n");
+	}
 	
 	return 0;
 }
 
-static int cmd_si(char *args) {
+static int cmd_si(char *args) 
+{
 	char *arg = strtok(NULL, " ");
 	int n = 0;
 	if (arg == NULL)
