@@ -103,9 +103,11 @@ static int cmd_x(char *args)
 		return 0;
 	}
 	
-	if(strtok(NULL," ")){
+	if( strtok(NULL, " ") )
+	{
 		printf("Input error: Too many parameters\n");
-		return 0;}
+		return 0;
+	}
 	int len;
 	swaddr_t addr;
 	sscanf(arg1, "%d", &len);
