@@ -111,7 +111,7 @@ static int cmd_x(char *args)
 	sscanf(arg1, "%d", &len);
 	sscanf(arg2, "%x", &addr);
 
-	printf("0x%x:", addr);
+	printf("0x%x:\n", addr);
 	int i;
 	for (i = 0; i < len; i++)
 	{
@@ -123,9 +123,9 @@ static int cmd_x(char *args)
 			printf("%02x  ", value & 0xff);
 			value = value>>8;
 		}
+		printf("\n");
 	}
-	printf("\n");
-	
+
 	return 0;
 }
 
