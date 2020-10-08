@@ -122,6 +122,7 @@ int set_watchpoint(char *e)
 	printf("Set watchpoint  #%d\n", p->NO);
 	strcpy(head->expr, e);
 	printf("expr=%s\n", p->expr);
+
 	bool success = true;
 	p->old_val = expr(p->expr, &success);
 	if(!success)
