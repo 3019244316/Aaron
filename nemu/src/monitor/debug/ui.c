@@ -83,7 +83,7 @@ static int cmd_w(char *args)
 	char *arg = strtok(NULL, " ");
 	if ( arg == NULL || strtok(NULL, " ") )
 	{
-		printf("Input error.\nPlease input one point\n");
+		printf("Input error\nPlease input one point\n");
 		return 0;
 	}
 	set_watchpoint(args);
@@ -93,6 +93,11 @@ static int cmd_w(char *args)
 static int cmd_d(char *args)
 {
 	char *arg = strtok(NULL, " ");
+	if ( arg == NULL || strtok(NULL, " ") )
+	{
+		printf("Input error\nPlease input the number of the point you want to delete\n");
+		return 0;
+	}
 	int NO;
 	sscanf(arg, "%d", &NO);
 	delete_watchpoint(NO);
