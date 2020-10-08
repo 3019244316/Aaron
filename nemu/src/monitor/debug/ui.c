@@ -80,6 +80,12 @@ static struct {
 
 static int cmd_w(char *args)
 {
+	char *arg = strtok(NULL, " ");
+	if ( arg == NULL || strtok(NULL, " ") )
+	{
+		printf("Input error.\nPlease input one point\n");
+		return 0;
+	}
 	set_watchpoint(args);
 	return 0;
 }
