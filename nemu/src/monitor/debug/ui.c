@@ -97,6 +97,15 @@ static int cmd_x(char *args)
 {
 	char *arg1 = strtok(NULL, " ");
 	char *arg2 = strtok(NULL, " ");
+	if( !arg1 || !arg2 )
+	{
+		printf("Please input length and address\n");
+		return 0;
+	}
+	
+	if(strtok(NULL," ")){
+		printf("Input error: Too many parameters\n");
+		return 0;}
 	int len;
 	swaddr_t addr;
 	sscanf(arg1, "%d", &len);
@@ -106,8 +115,14 @@ static int cmd_x(char *args)
 	int i;
 	for (i = 0; i < len; i++)
 	{
-		printf("%x ", swaddr_read(addr, 4));
-		addr += 4;
+		uint32_t  value = swaddr_read(addr+i*4, 4);
+		printf("0x%08x  ", addr+i*4);
+		int j = 0;
+		for( ; j<4; j++)
+		{
+			printf("%02x  ", value & 0xff);
+			value = value>>8;
+		}
 	}
 	printf("\n");
 	
