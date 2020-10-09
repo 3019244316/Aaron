@@ -73,3 +73,10 @@ test: $(nemu_BIN) $(testcase_BIN) entry
 
 submit: clean
 	cd .. && zip -r $(STU_ID).zip $(shell pwd | grep -o '[^/]*$$')
+
+count: $(file_name)
+	find $(file_name) -name "*[.h|.c]" |xargs cat|wc -l
+
+count-nb: $(file_name)
+	find $(file_name) -name "*[.h|.c]" |xargs cat|grep -v ^$|wc -l
+
